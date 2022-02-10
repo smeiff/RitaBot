@@ -67,9 +67,8 @@ function e50013 (data, eh, forwardChannel, sendData)
 
          if (res.length < 1 || !res)
          {
-
+ console.log(`Somthing has gone really really wrong`);
             return;
-            // console.log(`Somthing has gone really really wrong`);
 
          }
 
@@ -80,7 +79,7 @@ function e50013 (data, eh, forwardChannel, sendData)
          if (eh === "o")
          {
 
-            // console.log("DEBUG: Error 50013 - Origin");
+console.log("DEBUG: Error 50013 - Origin");
             await logger("custom", {
                "color": "ok",
                "msg": `:exclamation: Write Permission Error - ${eh} \n
@@ -314,7 +313,7 @@ function reactpersist (data, msg)
    if (data.reaction === true && data.message.server[0].reactpersist === false || data.message.server[0].reactpersist === 0)
    {
 
-      // console.log("DEBUG: Delete reacted Message");
+       console.log("DEBUG: Delete reacted Message");
       try
       {
 
@@ -450,7 +449,7 @@ function embedOn (data)
 
    function sendBox (data)
    {
-
+console.log(data);
 
       /*
       If (data.message.author)

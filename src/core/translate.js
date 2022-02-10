@@ -18,6 +18,7 @@ const auth = require("../core/auth");
 
 function discordPatch (string)
 {
+	console.log('patch', string);
 
    // eslint-disable-next-line no-useless-escape
    const urlRegex = /(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?/giu;
@@ -187,6 +188,7 @@ async function reTranslate (matches, opts)
 
    };
    const res = await translate(matches.text, OPTIONS);
+   console.log('retranslate', res);
    return translateFix(res.text, matches);
 
 }
@@ -207,7 +209,7 @@ function getUserColor (data, callback)
 
    data.forward = fw;
    data.text = txt;
-   data.footer = ft;
+   data.footer = ft;j
    data.message.author = usr;
    data.message = msg;
 
@@ -258,7 +260,7 @@ function bufferChains (data, from, guild)
       const chainMsgs = chain.msgs.join("\n");
       const to = data.translate.to.valid[0].iso;
       const matches = await discordPatch(chainMsgs);
-
+	console.log('bugger chains');
       translate(
          matches.text,
          {
@@ -267,6 +269,7 @@ function bufferChains (data, from, guild)
          }
       ).then((res) =>
       {
+		  console.log('bufferchain', res);
 
          /*
          if (res.error && res.error === true)
@@ -426,7 +429,7 @@ module.exports = function run (data) // eslint-disable-line complexity
       data.translate.from.valid && data.translate.from.valid.length < 1
    )
    {
-
+	console.log('not valid');
       return;
 
    }
@@ -539,6 +542,7 @@ module.exports = function run (data) // eslint-disable-line complexity
       {
 
          const matches = await discordPatch(data.translate.original);
+		 console.log('data.translate.to.valid', matches);
          translate(
             matches.text,
             {
@@ -547,6 +551,7 @@ module.exports = function run (data) // eslint-disable-line complexity
             }
          ).then((res) =>
          {
+			 console.log('translatetovalid', res);
 
             /*
             if (res.error && res.error === true)
@@ -618,14 +623,12 @@ module.exports = function run (data) // eslint-disable-line complexity
 
    textArray.forEach(async (chunk) =>
    {
-
       const matches = await discordPatch(chunk);
       translate(
          matches.text,
          opts
-      ).then(async (res) =>
+      ).then(async res =>
       {
-
          /*
          if (res.error && res.error === true)
          {
@@ -640,7 +643,7 @@ module.exports = function run (data) // eslint-disable-line complexity
          */
 
          res.text = translateFix(res.text, matches);
-
+		
          const langTo = opts.to;
 
          // Detected language from text
@@ -676,7 +679,7 @@ module.exports = function run (data) // eslint-disable-line complexity
 
             }
 
-            // console.log("DEBUG: Cross Server Checker - Diffrent Server, Same language");
+             // console.log("DEBUG: Cross Server Checker - Diffrent Server, Same language");
 
          }
          else if (detectedLang !== channelFrom && channelFrom !== "auto")
@@ -719,6 +722,9 @@ module.exports = function run (data) // eslint-disable-line complexity
             }
 
          }
+		 
+		 botSend(data);
+		 
          return getUserColor(
             data,
             botSend

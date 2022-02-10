@@ -72,7 +72,6 @@ exports.client = client;
 // eslint-disable-next-line func-style
 function login (token)
 {
-
    client.login(token).catch((err) =>
    {
 

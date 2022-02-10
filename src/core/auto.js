@@ -28,7 +28,7 @@ function sendTranslation (data)
          // -------------
          // Send message
          // -------------
-
+		console.log('sending message', data);
          return botSend(data);
 
       }
@@ -37,6 +37,7 @@ function sendTranslation (data)
       // Send message
       // -------------
 
+	console.log('sendTranslation.translate message');
       return translate(data);
 
    }
@@ -132,7 +133,7 @@ function startTranslation (data, i, row)
 
       data.footer = footerOriginal;
       sendTranslation(data);
-
+	console.log('translation sent');
    }
 
 }
